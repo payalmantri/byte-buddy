@@ -14,8 +14,8 @@ import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;
 import java.util.Arrays;
 import java.util.Collections;
-
 import java.util.Comparator;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -43,11 +43,10 @@ public class TypeDescriptionGenericBuilderTest extends AbstractTypeDescriptionGe
 
     protected TypeDescription.Generic describeExceptionType(Method method, int index) {
         Type[] exceptionTypes = method.getGenericExceptionTypes();
-        // Sort type array
         Arrays.sort(exceptionTypes, new Comparator<Type>() {
             @Override
-            public int compare(Type o1, Type o2) {
-                return o1.getTypeName().compareTo(o2.getTypeName());
+            public int compare(Type t1, Type t2) {
+                return t1.getTypeName().compareTo(t2.getTypeName());
             }
         });
         return describe(exceptionTypes[index], new TypeDescription.Generic.AnnotationReader.Delegator.ForLoadedExecutableExceptionType(method, index))
